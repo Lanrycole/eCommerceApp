@@ -108,14 +108,11 @@ public class UserAuthTest {
 
     }
 
-
-
     @Test
     public void verifying_password_match() throws Exception {
 
         CreateUserRequest user = createUser();
         user.setPassword("wrongpassword");
-
         mvc.perform(
                 post(new URI("/api/user/create"))
                         .content(jacksonTester.write(user).getJson())
@@ -142,6 +139,7 @@ public class UserAuthTest {
 
     }
 
+
     //User with No JWT can not add Items to cart
     @Test
     public void cannot_use_api_unless_with_jwt() throws Exception {
@@ -155,7 +153,7 @@ public class UserAuthTest {
                         .content(userWithoutJWT)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().is(403));
+                .andExpect(status().is(401));
 
     }
 
@@ -172,7 +170,7 @@ public class UserAuthTest {
                         .content(userWithoutJWT)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().is(403));
+                .andExpect(status().is(401));
 
     }
 
@@ -189,13 +187,12 @@ public class UserAuthTest {
                         .content(userWithoutJWT)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().is(403));
-
-
-
-
+                .andExpect(status().is(401));
 
     }
+
+
+
 
 }
 
